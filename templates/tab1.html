@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Admin Dashboard | Korsat X Parmaga</title>
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        th, td {
+            border: 1px solid #000; /* màu đen, bạn có thể đổi */
+            padding: 8px;
+        }
+        .search-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .material-list {
+            flex: 1;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #searchInput {
+            width: 250px;
+            height: 36px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+        
+        .search-button {
+            height: 36px;
+            padding: 0 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        button:hover {
+            cursor: pointer;
+        }
+        
+    </style>
+    
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="logo-apple"></ion-icon>
+                        </span>
+                        <span class="title">Brand Name</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Customers</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                        </span>
+                        <span class="title">Messages</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="help-outline"></ion-icon>
+                        </span>
+                        <span class="title">Help</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="assets/imgs/customer01.jpg" alt="">
+                </div>
+            </div>
+            <!-- ================ Order Details List ================= -->
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Chọn vật liệu</h2>
+                    </div>
+                    <div class="search-container">
+                        <!-- Danh sách vật liệu -->
+                        <div class="material-list">
+                            <label for="materialSelect">Tên vật liệu:</label>
+                            <select id="materialSelect" name="material" style="width: 200px; height: 30px; border-radius: 5px; border: 1px solid #ccc;">
+                                {% for m in materials %}
+                                    <option value="{{ m['Tên vật liệu ( tiếng anh)'] }}">
+                                        {{ m['Tên vật liệu ( tiếng anh)'] }} - {{ m['Tên vật liệu ( tiếng việt)'] }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    
+                        <div class="search-bar">
+                            <input type="text" id="searchInput" placeholder="🔍 Tìm vật liệu...">
+                            <button class="search-button">Tìm kiếm</button>
+                        </div>                        
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>Đơn vị</td>
+                                <td>V</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>                  
+                            <tr>
+                                <td rowspan="2">Tỷ trọng</td>
+                                <td>kg/m³</td>
+                                <td><input id="fx1-1" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;"></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">ibs/ft³</td>
+                                <td style="text-align: center;">
+                                    <input id="fx1-2" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Hệ số vật liệu</td>
+                                <td></td>
+                                <td><input id="hesovatlieu" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;"></td>
+                            </tr>
+                            <tr>
+                                <td>Hệ số điền đầy</td>
+                                <td>%</td>
+                                <td><input id="hesodienday" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;"></td>
+                            </tr>
+                            <tr>
+                                <td>Kích thước vật liệu</td>
+                                <td></td>
+                                <td><input id="kichthuocvatlieu" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;"></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Khả năng chảy</td>
+                                <td></td>
+                                <td id="khanangchay"></td>
+                            </tr>
+                            <tr>
+                                <td>Mức độ mài mòn</td>
+                                <td></td>
+                                <td id="mucdomaimon"></td>
+                            </tr>
+                            <tr>
+                                <td>Tính chất đặc biệt</td>
+                                <td></td>
+                                <td id="tinhchatdacbiet"></td>
+                            </tr>
+                            <tr>
+                                <td>Loại bạc đạn (khuyến nghị)</td>
+                                <td></td>
+                                <td id="loaidanbac"></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button class="search-button">⬅️ Back</button>
+                        <form method="POST" action="/step2" id="nextForm">
+                            <input type="hidden" name="tytrong1" id="input_tytrong">
+                            <input type="hidden" name="hesovatlieu1" id="input_hesovatlieu">
+                            <input type="hidden" name="hesodienday1" id="input_hesodienday">
+                            <input type="hidden" name="kichthuocvatlieu1" id="input_kichthuocvatlieu">
+                            <input type="hidden" name="khanangchay1" id="input_khanangchay">
+                            <input type="hidden" name="mucdomaimon1" id="input_mucdomaimon">
+                            <input type="hidden" name="tinhchatdacbiet1" id="input_tinhchatdacbiet">
+                            <input type="hidden" name="loaidanbac1" id="input_loaidanbac">
+                            <button class="search-button">Next ➡️</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                
+                
+                <!-- ================= New Customers ================ -->
+                <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Recent Customers</h2>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        const inputFx11 = document.getElementById('fx1-1');
+        const inputFx12 = document.getElementById('fx1-2');
+    
+        const kgToIbsFactor = 0.062428;
+        const ibsToKgFactor = 2.20462;
+    
+        inputFx11.addEventListener('input', function () {
+            const val = parseFloat(this.value);
+            if (!isNaN(val)) {
+                inputFx12.value = (val * kgToIbsFactor).toFixed(4);
+            } else {
+                inputFx12.value = '';
+            }
+        });
+    
+        inputFx12.addEventListener('input', function () {
+            const val = parseFloat(this.value);
+            if (!isNaN(val)) {
+                inputFx11.value = (val * ibsToKgFactor).toFixed(4);
+            } else {
+                inputFx11.value = '';
+            }
+        });
+    </script>
+    
+    <script>
+        const materialData = {{ materials | tojson }};
+        const selectElement = document.getElementById('materialSelect');
+    
+        selectElement.addEventListener('change', function () {
+            const selectedName = this.value;
+    
+            const selected = materialData.find(m => m["Tên vật liệu ( tiếng anh)"] === selectedName);
+    
+            if (selected) {
+                document.getElementById("fx1-1").value = selected["Tỷ trọng (kg/m³)"] || "";
+                document.getElementById("fx1-2").value = (selected["Tỷ trọng (kg/m³)"] * 0.062428).toFixed(2) || "";
+                document.getElementById("hesovatlieu").value = selected["Hệ số vật liệu\n(FM)"] || "";
+                document.getElementById("hesodienday").value = (selected["Hệ số điền đầy\n(C)"] || "").length === 3
+                ? selected["Hệ số điền đầy\n(C)"].slice(0, -1)
+                : (selected["Hệ số điền đầy\n(C)"] || "");
+                document.getElementById("kichthuocvatlieu").value = (selected["Unnamed: 6"] || "");
+                document.getElementById("khanangchay").textContent = selected["Khả năng chảy\n(KC)"] || "";
+                document.getElementById("mucdomaimon").textContent = selected["Mức độ mài mòn\n(MM)"] || "";
+                document.getElementById("tinhchatdacbiet").textContent = selected["Tính chất đặc biệt\n(DB)"] || "";
+                document.getElementById("loaidanbac").textContent = selected["Loại bạc đạn khuyến nghị (FB)"] || "";
+                updateHiddenInputs(selected);
+            }
+        });
+        function updateHiddenInputs(selected) {
+            document.getElementById("input_tytrong").value = selected["Tỷ trọng (kg/m³)"] || "";
+            document.getElementById("input_hesovatlieu").value = selected["Hệ số vật liệu\n(FM)"] || "";
+            document.getElementById("input_hesodienday").value = (selected["Hệ số điền đầy\n(C)"] || "").length === 3
+                ? selected["Hệ số điền đầy\n(C)"].slice(0, -1)
+                : (selected["Hệ số điền đầy\n(C)"] || "");
+            document.getElementById("input_kichthuocvatlieu").value = (selected["Unnamed: 6"] || "");
+            document.getElementById("input_khanangchay").value = selected["Khả năng chảy\n(KC)"] || "";
+            document.getElementById("input_mucdomaimon").value = selected["Mức độ mài mòn\n(MM)"] || "";
+            document.getElementById("input_tinhchatdacbiet").value = selected["Tính chất đặc biệt\n(DB)"] || "";
+            document.getElementById("input_loaidanbac").value = selected["Loại bạc đạn khuyến nghị (FB)"] || "";
+        }
+        window.addEventListener("DOMContentLoaded", () => {
+            selectElement.dispatchEvent(new Event("change"));
+        });
+    </script>
+    <script>
+        function updateDropdown(filteredList) {
+            selectElement.innerHTML = ''; 
+    
+            filteredList.forEach(m => {
+                const option = document.createElement('option');
+                option.value = m["Tên vật liệu ( tiếng anh)"];
+                option.textContent = `${m["Tên vật liệu ( tiếng anh)"]} - ${m["Tên vật liệu ( tiếng việt)"]}`;
+                selectElement.appendChild(option);
+            });
+            if (filteredList.length > 0) {
+                selectElement.dispatchEvent(new Event("change"));
+            } else {
+                clearMaterialDetails();
+            }
+        }
+        function clearMaterialDetails() {
+            const ids = ["fx1-1", "fx1-2", "hesovatlieu", "hesodienday", "kichthuocvatlieu", "khanangchay", "mucdomaimon", "tinhchatdacbiet", "loaidanbac"];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el.tagName === 'INPUT') {
+                    el.value = "";
+                } else {
+                    el.textContent = "";
+                }                
+            });
+        }
+        
+        searchInput.addEventListener('input', function () {
+            const keyword = this.value.trim().toLowerCase();
+    
+            const filtered = materialData.filter(m => {
+                const nameEn = m["Tên vật liệu ( tiếng anh)"]?.toLowerCase() || "";
+                const nameVi = m["Tên vật liệu ( tiếng việt)"]?.toLowerCase() || "";
+                return nameEn.includes(keyword) || nameVi.includes(keyword);
+            });
+    
+            updateDropdown(filtered);
+        });
+    
+        selectElement.addEventListener('change', function () {
+            const selected = materialData.find(m => m["Tên vật liệu ( tiếng anh)"] === this.value);
+            if (!selected) return;
+    
+                document.getElementById("fx1-1").value = selected["Tỷ trọng (kg/m³)"] || "";
+                document.getElementById("fx1-2").value = (selected["Tỷ trọng (kg/m³)"] * 0.062428).toFixed(2) || "";
+                document.getElementById("hesovatlieu").value = selected["Hệ số vật liệu\n(FM)"] || "";
+                document.getElementById("hesodienday").value = (selected["Hệ số điền đầy\n(C)"] || "").length === 3
+                ? selected["Hệ số điền đầy\n(C)"].slice(0, -1)
+                : (selected["Hệ số điền đầy\n(C)"] || "");
+                document.getElementById("kichthuocvatlieu").value = (selected["Unnamed: 6"] || "");
+                document.getElementById("khanangchay").textContent = selected["Khả năng chảy\n(KC)"] || "";
+                document.getElementById("mucdomaimon").textContent = selected["Mức độ mài mòn\n(MM)"] || "";
+                document.getElementById("tinhchatdacbiet").textContent = selected["Tính chất đặc biệt\n(DB)"] || "";
+                document.getElementById("loaidanbac").textContent = selected["Loại bạc đạn khuyến nghị (FB)"] || "";
+        });
+        window.addEventListener("DOMContentLoaded", () => {
+            updateDropdown(materialData);
+        });
+    </script>
+    
+</body>
+
+</html>

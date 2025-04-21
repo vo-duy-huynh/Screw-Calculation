@@ -1,0 +1,43 @@
+[
+    {
+      "Loại bạc đạn": "Bạc đạn bi",
+      "Hệ số Fb": 1,
+      "Ký hiệu": "B"
+    },
+    {
+      "Loại bạc đạn": "Bạc thau",
+      "Hệ số Fb": 2,
+      "Ký hiệu": "S"
+    },
+    {
+      "Loại bạc đạn": "Chì",
+      "Hệ số Fb": 2,
+      "Ký hiệu": "S"
+    },
+    {
+      "Loại bạc đạn": "Teflon",
+      "Hệ số Fb": 2,
+      "Ký hiệu": "S"
+    },
+    {
+      "Loại bạc đạn": "Gang cứng",
+      "Hệ số Fb": 4.4,
+      "Ký hiệu": "H"
+    },
+    {
+      "Loại bạc đạn": "Hợp kim Stellite",
+      "Hệ số Fb": 4.4,
+      "Ký hiệu": "H"
+    },
+    {
+      "Loại bạc đạn": "Hợp kim gang trắng",
+      "Hệ số Fb": 4.4,
+      "Ký hiệu": "H"
+    },
+    {
+      "Loại bạc đạn": "Gốm sứ",
+      "Hệ số Fb": 4.4,
+      "Ký hiệu": "H"
+    }
+  ]
+  
