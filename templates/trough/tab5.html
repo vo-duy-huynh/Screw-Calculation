@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screw Calculation</title>
+    <!-- ======= icon online ======= -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1106/1106230.png">
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        .search-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .material-list {
+            flex: 1;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        
+        #searchInput {
+            width: 250px;
+            height: 36px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+        
+        .search-button {
+            height: 36px;
+            padding: 0 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        button:hover {
+            cursor: pointer;
+        }
+        .dual-dropdown-container {
+            display: flex;
+            gap: 40px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+        
+        .material-list {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .material-list label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .material-list select {
+            width: 100%;
+            height: 32px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        {% include '_sidebar.html' %}
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Chọn vật liệu</h2>
+                    </div>
+                    <div class="search-container">
+                        <div class="material-list">
+                            <label for="mpaSelect">Tên loại vật liệu:</label>
+                            <select id="mpaSelect" name="mpa" style="width: 170px; height: 30px; border-radius: 5px; border: 1px solid #ccc;">
+                                {% for m in mpas %}
+                                    <option value="{{ m.modulus_mpa }}" data-density="{{ m.density }}">
+                                        {{ m.name }} - {{ m.modulus_mpa }}
+                                    </option>
+                                {% endfor %}
+                            </select>                            
+                        </div>         
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Vật liệu trục vít</td>
+                                <td>Đơn vị</td>
+                                <td id="tenvatlieu">{{ data.tenvatlieu }}</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>                  
+                            <tr>
+                                <td>Modun đàn hồi</td>
+                                <td>Mpa</td>
+                                <td id="fx5-1"></td>
+                            </tr>
+                            <tr>
+                                <td>Tỷ trọng vật liệu</td>
+                                <td>Kg/dm3</td>
+                                <td id="fx5-2"></td>
+                            </tr>
+                            <tr>
+                                <td>Chiều dài</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-3" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đường kính cánh</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-4" value="{{ data.duongkinhcanh }}" readonly style="width:100px; text-align:center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bước cánh</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-5" value="{{ data.buoccanh }}" readonly style="width:100px; text-align:center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Chiều dày cánh</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-6" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đường kính trục</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-7" value="{{ data.duongkinhtruc }}" readonly style="width:100px; text-align:center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Chiều dày trục</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-8" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Momen quán tính</td>
+                                <td>mm4</td>
+                                <td>
+                                    <input id="fx5-9" type="text" readonly style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Độ võng trục</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx5-10" type="text" readonly style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            
+                            
+                        </tbody>
+                        
+                        
+                    </table>
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button class="search-button" onclick="window.history.back()">⬅️ Back</button>
+                        <form method="POST" action="/trough/tab3" id="nextForm">
+                            <input type="hidden" name="nangsuatm3h" id="input_nangsuatm3h">
+                            <input type="hidden" name="nangsuatft3h" id="input_nangsuatft3h">
+                            <input type="hidden" name="khoiluongkgh" id="input_khoiluongkgh">
+                            <input type="hidden" name="khoiluonglbsh" id="input_khoiluonglbsh">
+                            <input type="hidden" name="hesovattulieu" id="input_hesovattulieu">
+                            <input type="hidden" name="gocnghieng" id="input_gocnghieng">
+                            <input type="hidden" name="hesodienfull" id="input_hesodienfull">
+                            <input type="hidden" name="duongkinhcanh" id="input_duongkinhcanh">
+                            <input type="hidden" name="buoccanh" id="input_buoccanh">
+                            <input type="hidden" name="duongkinhtruc" id="input_duongkinhtruc">
+                            <input type="hidden" name="tocdo" id="input_tocdo">
+            
+                            <button class="search-button">Next ➡️</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                {% include '_cardHeader.html' %}
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const selectElement = document.getElementById('mpaSelect');
+        
+            function updateMaterialInfo() {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+                const modulus = parseFloat(selectedOption.value) || 0;
+                const density = parseFloat(selectedOption.getAttribute('data-density')) || 0;
+        
+                document.getElementById("fx5-1").textContent = modulus;
+                document.getElementById("fx5-2").textContent = density.toFixed(2);
+            }
+            selectElement.addEventListener('change', updateMaterialInfo);
+            updateMaterialInfo();
+        });
+    </script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            function getVal(id) {
+                return parseFloat(document.getElementById(id).value) || 0;
+            }
+    
+            function setText(id, val) {
+                document.getElementById(id).textContent = val.toFixed(4);
+            }
+    
+            document.getElementById("calcBtn").addEventListener("click", () => {
+                const fx5_1 = getVal("fx5-1");
+                const fx5_2 = getVal("fx5-2");
+                const fx5_3 = getVal("fx5-3");
+                const fx5_4 = getVal("fx5-4");
+                const fx5_5 = getVal("fx5-5");
+                const fx5_6 = getVal("fx5-6");
+                const fx5_7 = getVal("fx5-7");
+                const fx5_8 = getVal("fx5-8");
+    
+                const pi = Math.PI;
+    
+                const l = Math.sqrt(Math.pow(fx5_7 * pi, 2) + Math.pow(fx5_5, 2));
+                const L = Math.sqrt(Math.pow(fx5_4 * pi, 2) + Math.pow(fx5_5, 2));
+                const ratio = L / l;
+                const d_ = (fx5_4 - fx5_7) / (ratio - 1);
+                const D_ = (ratio - 1) * (fx5_4 - fx5_7) + d_;
+                const alpha = L / (fx5_4 * pi / 360);
+    
+                const CV = pi * ((Math.pow(D_ / 2000, 2) - Math.pow(d_ / 2000, 2)) * fx5_6 * fx5_2 * (360 - alpha) / 360);
+                const TV = (fx5_7 - fx5_8) * pi * fx5_3 * fx5_8 * fx5_2 / 1000000;
+                const KL = CV * (fx5_3 / fx5_5) + TV;
+    
+                const fx5_9 = (pi / 64) * (Math.pow(fx5_7, 4) - Math.pow(fx5_7 - fx5_8 * 2, 4));
+                const fx5_10 = (6.387e-7 * KL * Math.pow(fx5_3, 3)) / fx5_9;
+    
+                document.getElementById("fx5-9").value = fx5_9;
+                document.getElementById("fx5-10").value = fx5_10; 
+            });
+        });
+    </script>
+    
+    
+        
+        
+        
+        <script>
+            const tbody = document.querySelector('tbody');
+            const fieldMap = {
+                'fx5-1': 'input_nangsuatm3h',
+                'fx5-2': 'input_nangsuatft3h',
+                'fx5-3': 'input_khoiluongkgh',
+                'fx5-4': 'input_khoiluonglbsh',
+                'hesodienday': 'input_hesovattulieu',
+                'fx5-5': 'input_gocnghieng',
+                'fx5-6': 'input_hesodienfull',
+                'fx5-7': 'input_duongkinhcanh',
+                'fx5-8': 'input_buoccanh',
+                'fx5-9': 'input_duongkinhtruc',
+                'fx5-10': 'input_tocdo'
+            };
+        
+            tbody.addEventListener('input', () => {
+                Object.entries(fieldMap).forEach(([visibleId, hiddenId]) => {
+                    const visible = document.getElementById(visibleId);
+                    const hidden = document.getElementById(hiddenId);
+        
+                    if (visible && hidden) {
+                        const value = visible.tagName === 'INPUT' ? visible.value : visible.textContent;
+                        hidden.value = value;
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>

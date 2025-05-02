@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screw Calculation</title>
+    <!-- ======= icon online ======= -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1106/1106230.png">
+    <!-- ======= Styles ====== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+    
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        .search-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .material-list {
+            flex: 1;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #searchInput {
+            width: 250px;
+            height: 36px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+        
+        #searchInput:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+        
+        .search-button {
+            height: 36px;
+            padding: 0 16px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        button:hover {
+            cursor: pointer;
+        }
+        
+    </style>
+    
+</head>
+
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        {% include '_sidebar.html' %}
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+            <div class="details">
+                <div class="recentOrders">
+                    <div class="cardHeader">
+                        <h2>Chọn vật liệu</h2>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Vật liệu</td>
+                                <td>Đơn vị</td>
+                                <td id="tenvatlieu">{{ data.tenvatlieu }}</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>                  
+                            <tr>
+                                <td rowspan="2">Năng suất</td>
+                                <td>m³/h</td>
+                                <td>
+                                    <input id="fx4-1" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">ft³/h</td>
+                                <td style="text-align: center;">
+                                    <input id="fx4-2" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">Khối lượng vật liệu</td>
+                                <td>kg/h</td>
+                                <td>
+                                    <input id="fx4-3" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">ibs/h</td>
+                                <td style="text-align: center;">
+                                    <input id="fx4-4" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hệ số điền đầy vật liệu</td>
+                                <td>%</td>
+                                <td>
+                                    <input id="hesodienday" value="{{ data.hesodienday }}" readonly style="width:100px; text-align:center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Góc nghiêng</td>
+                                <td>Độ</td>
+                                <td>
+                                    <input id="fx4-5" type="text" min="0" max="100" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hệ số điền đầy góc nghiêng</td>
+                                <td>%</td>
+                                <td>
+                                    <input id="fx4-6" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tốc độ</td>
+                                <td>rpm</td>
+                                <td>
+                                    <input id="fx4-7" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bước cánh</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx4-8" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đường kính trục</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx4-9" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đường kính cánh</td>
+                                <td>mm</td>
+                                <td>
+                                    <input id="fx4-10" readonly type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                        
+                    </table>
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button class="search-button" onclick="window.history.back()">⬅️ Back</button>
+                        <form method="POST" action="/trough/tab5" id="nextForm">
+                            <input type="hidden" name="nangsuatm3h" id="input_nangsuatm3h">
+                            <input type="hidden" name="nangsuatft3h" id="input_nangsuatft3h">
+                            <input type="hidden" name="khoiluongkgh" id="input_khoiluongkgh">
+                            <input type="hidden" name="khoiluonglbsh" id="input_khoiluonglbsh">
+                            <input type="hidden" name="hesovattulieu" id="input_hesovattulieu">
+                            <input type="hidden" name="gocnghieng" id="input_gocnghieng">
+                            <input type="hidden" name="hesodienfull" id="input_hesodienfull">
+                            <input type="hidden" name="duongkinhcanh" id="input_duongkinhcanh">
+                            <input type="hidden" name="buoccanh" id="input_buoccanh">
+                            <input type="hidden" name="duongkinhtruc" id="input_duongkinhtruc">
+                            <input type="hidden" name="tocdo" id="input_tocdo">
+            
+                            <button class="search-button">Next ➡️</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                {% include '_cardHeader.html' %}
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            // 1. Gán biến rõ nghĩa
+            const nangsuatm3h = document.getElementById("fx4-1");
+            const nangsuatft3h = document.getElementById("fx4-2");
+            const klvatlieukgh = document.getElementById("fx4-3");
+            const klvatlieuibsh = document.getElementById("fx4-4");
+            const gocnghieng = document.getElementById("fx4-5");
+            const hsddgocnghieng = document.getElementById("fx4-6");
+            const tocdo = document.getElementById("fx4-7");
+            const buoccanh = document.getElementById("fx4-8");
+            const duongkinhtruc = document.getElementById("fx4-9");
+            const duongkinhcanh = document.getElementById("fx4-10");
+            const inputHeso = document.getElementById("hesodienday");
+        
+            const tytrongkgm3 = parseFloat({{ data.tytrong | tojson }}) || 1;
+        
+            // 2. Đổi đơn vị năng suất và khối lượng
+            const groupInputs = [nangsuatm3h, nangsuatft3h, klvatlieukgh, klvatlieuibsh];
+            const clearLocks = () => groupInputs.forEach(i => i.dataset.locked = "false");
+        
+            const convertFrom = (sourceId) => {
+                let m3ph;
+                switch (sourceId) {
+                    case 'fx4-1': m3ph = parseFloat(nangsuatm3h.value); break;
+                    case 'fx4-2': m3ph = parseFloat(nangsuatft3h.value) / 35.3147; break;
+                    case 'fx4-3': m3ph = parseFloat(klvatlieukgh.value) / tytrongkgm3; break;
+                    case 'fx4-4': m3ph = parseFloat(klvatlieuibsh.value) / (tytrongkgm3 * 2.20462); break;
+                }
+        
+                if (isNaN(m3ph)) return;
+        
+                nangsuatm3h.value = m3ph.toFixed(4);
+                nangsuatft3h.value = (m3ph * 35.3147).toFixed(4);
+                klvatlieukgh.value = (m3ph * tytrongkgm3).toFixed(4);
+                klvatlieuibsh.value = (m3ph * tytrongkgm3 * 2.20462).toFixed(4);
+        
+                clearLocks();
+                document.getElementById(sourceId).dataset.locked = "true";
+        
+                updateDuongKinhCanh(); // tính lại đường kính cánh nếu đủ
+            };
+        
+            groupInputs.forEach(input => {
+                input.dataset.locked = "false";
+                input.addEventListener("input", () => {
+                    if (input.dataset.locked === "true") return;
+                    convertFrom(input.id);
+                });
+            });
+        
+            // 3. Góc <=> hệ số góc
+            gocnghieng.addEventListener("input", () => {
+                const val = parseFloat(gocnghieng.value);
+                hsddgocnghieng.value = !isNaN(val) ? (4.43e-5 * val ** 2 - 0.00836 * val + 1.0058).toFixed(4) : '';
+                updateDuongKinhCanh();
+            });
+        
+            hsddgocnghieng.addEventListener("input", () => {
+                const val = parseFloat(hsddgocnghieng.value);
+                gocnghieng.value = !isNaN(val) ? Math.sqrt((val - 1.0058 + 0.00836 * val) / 4.43e-5).toFixed(4) : '';
+                updateDuongKinhCanh();
+            });
+        
+            // 4. Tính đường kính cánh
+            const updateDuongKinhCanh = () => {
+                const Q = parseFloat(nangsuatm3h.value);
+                const n = parseFloat(tocdo.value);
+                const P = parseFloat(buoccanh.value);
+                const d = parseFloat(duongkinhtruc.value);
+                const C = parseFloat(inputHeso.value);
+                const f = parseFloat(hsddgocnghieng.value);
+        
+                if ([Q, n, P, d, C, f].some(v => isNaN(v) || v <= 0)) {
+                    duongkinhcanh.value = '';
+                    return;
+                }
+        
+                const A = (Q * 1e9) / (Math.PI * P * n * C / 100 * f);
+                const D = Math.sqrt(A + d ** 2);
+                duongkinhcanh.value = D.toFixed(2);
+            };
+        
+            [nangsuatm3h, tocdo, buoccanh, duongkinhtruc, hsddgocnghieng, inputHeso].forEach(el => {
+                el.addEventListener("input", updateDuongKinhCanh);
+            });
+        });
+        </script>
+        
+        
+        
+        <script>
+            const tbody = document.querySelector('tbody');
+            const fieldMap = {
+                'fx4-1': 'input_nangsuatm3h',
+                'fx4-2': 'input_nangsuatft3h',
+                'fx4-3': 'input_khoiluongkgh',
+                'fx4-4': 'input_khoiluonglbsh',
+                'hesodienday': 'input_hesovattulieu',
+                'fx4-5': 'input_gocnghieng',
+                'fx4-6': 'input_hesodienfull',
+                'fx4-10': 'input_duongkinhcanh',
+                'fx4-8': 'input_buoccanh',
+                'fx4-9': 'input_duongkinhtruc',
+                'fx4-7': 'input_tocdo'
+            };
+        
+            tbody.addEventListener('input', () => {
+                Object.entries(fieldMap).forEach(([visibleId, hiddenId]) => {
+                    const visible = document.getElementById(visibleId);
+                    const hidden = document.getElementById(hiddenId);
+        
+                    if (visible && hidden) {
+                        const value = visible.tagName === 'INPUT' ? visible.value : visible.textContent;
+                        hidden.value = value;
+                    }
+                });
+            });
+        </script>
+    
+</body>
+
+</html>
