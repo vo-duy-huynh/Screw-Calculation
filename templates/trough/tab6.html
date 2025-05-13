@@ -100,109 +100,158 @@
                     <div class="cardHeader">
                         <h2>Chọn vật liệu</h2>
                     </div>
+                    
+                    <!-- Formula explanation -->
+                    <div style="margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 6px; border: 1px solid #e9ecef;">
+                        <h3 style="margin-top: 0; color: #007bff; font-size: 16px;">Chú thích tính toán:</h3>
+                        <ul style="font-size: 14px; padding-left: 20px;">
+                            <li><strong>Fx6-1 đến Fx6-4:</strong> Lấy giá trị từ Tab 02 hoặc 03 hoặc 04 (Tab nào được tính toán mới nhất thì lấy Tab đó)</li>
+                            <li><strong>Fx6-5:</strong> = Fx1-1 (Tỷ trọng từ Tab 1)</li>
+                            <li><strong>Fx6-6:</strong> = Fx1-2 (Quy đổi từ tỷ trọng)</li>
+                            <li><strong>Fx6-8:</strong> Lấy giá trị từ Tab 02 hoặc 03 hoặc 04</li>
+                            <li><strong>Fx6-9:</strong> Khi chọn vào mục này thì mục Fx6-8 sẽ bị vô hiệu hóa</li>
+                            <li><strong>Fx6-10:</strong> = C (import từ Tab 1)</li>
+                            <li><strong>Fx6-11:</strong> = Fm (Hệ số vật liệu)</li>
+                            <li><strong>Fx6-12:</strong> = 0.8*(Fx6-15+Fx6-21)*0.12</li>
+                            <li><strong>Fx6-13:</strong> = 4.43*10^-5*Fx6-8^2-0.00836*Fx6-8+1.0058</li>
+                            <li><strong>Fx6-14:</strong> Mặc định là 88, nếu click vào chỉnh sửa thì có thể nhập thủ công từ 0 đến 100</li>
+                            <li><strong>Fx6-15:</strong> = (Fx6-7*0.00328084*Fx6-18*Fx6-19*0.372*Fx6-20^2.03)*0.75</li>
+                            <li><strong>Fx6-16:</strong> = 9550*Fx6-22/101</li>
+                            <li><strong>Fx6-19:</strong> Sổ danh sách xuống chọn loại bạc đạn (hệ số kèm theo sẽ được gán vào nó luôn nhưng ko hiển thị), mặc định sẽ chọn loại hiển thị ở TAB 1, nếu có nhiều loại trớ lên thì có thể chọn loại nào đứng đầu tiên</li>
+                            <li><strong>Fx6-20:</strong> Lấy giá trị từ Tab 02 hoặc 03 hoặc 05</li>
+                            <li><strong>Fx6-21:</strong> = (Fx6-7*0.00328084*Fx6-2*Fx6-6*Fx6-10*Fx6-11)*0.75</li>
+                            <li><strong>Fx6-22:</strong> = ((Fx6-21+Fx6-19)+Fx6-15)*Fx6-12/Fx6-14</li>
+                        </ul>
+                    </div>
+                    
                     <table>
                         <thead>
                             <tr>
-                                <td>Vật liệu</td>
-                                <td>Đơn vị</td>
-                                <td id="tenvatlieu">{{ data.tenvatlieu1 }}</td>
+                                <td style="width: 30%;">Thông số</td>
+                                <td style="width: 20%;">Đơn vị</td>
+                                <td style="width: 25%;">Mã</td>
+                                <td style="width: 30%;">Thông số</td>
+                                <td style="width: 20%;">Đơn vị</td>
+                                <td style="width: 25%;">Mã</td>
                             </tr>
                         </thead>
 
                         <tbody>                  
                             <tr>
-                                <td rowspan="2">Năng suất</td>
-                                <td>m³/h</td>
-                                <td>
-                                    <input id="fx2-1" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td style="color: #007bff;">Năng suất</td>
+                                <td>m3/h</td>
+                                <td><input id="fx6-1" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Hệ số điền đầy</td>
+                                <td>%</td>
+                                <td><input id="fx6-10" type="text" style="width: 100px; text-align: center;" title="= C (import từ Tab 1)"></td>
                             </tr>
                             <tr>
-                                <td style="text-align: right;">ft³/h</td>
-                                <td style="text-align: center;">
-                                    <input id="fx2-2" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td></td>
+                                <td>ft3/h</td>
+                                <td><input id="fx6-2" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Loại bạc đạn</td>
+                                <td></td>
+                                <td><input id="fx6-19" type="text" style="width: 100px; text-align: center;" title="Sổ danh sách xuống chọn loại bạc đạn (hệ số kèm theo sẽ được gán vào nó luôn nhưng ko hiển thị)"></td>
                             </tr>
                             <tr>
-                                <td rowspan="2">Khối lượng vật liệu</td>
+                                <td style="color: #007bff;">Khối lượng</td>
                                 <td>kg/h</td>
-                                <td>
-                                    <input id="fx2-3" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td><input id="fx6-3" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Hệ số vật liệu</td>
+                                <td></td>
+                                <td><input id="fx6-11" type="text" style="width: 100px; text-align: center;" title="=Fm"></td>
                             </tr>
                             <tr>
-                                <td style="text-align: right;">ibs/h</td>
-                                <td style="text-align: center;">
-                                    <input id="fx2-4" type="text" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td></td>
+                                <td>ibs/h</td>
+                                <td><input id="fx6-4" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Hệ số quá tải</td>
+                                <td></td>
+                                <td><input id="fx6-12" type="text" style="width: 100px; text-align: center;" title="=0.8*(Fx6-15+Fx6-21)*0.12"></td>
                             </tr>
                             <tr>
-                                <td>Hệ số điền đầy vật liệu</td>
+                                <td style="color: #007bff;">Tỷ trọng</td>
+                                <td>kg/m3</td>
+                                <td><input id="fx6-5" type="text" style="width: 100px; text-align: center;" title="= Fx1-1"></td>
+                                <td>Hệ số góc nghiêng</td>
+                                <td></td>
+                                <td><input id="fx6-13" type="text" style="width: 100px; text-align: center;" title="=4.43*10^-5*Fx6-8^2-0.00836*Fx6-8+1.0058"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>ibs/ft3</td>
+                                <td><input id="fx6-6" type="text" style="width: 100px; text-align: center;" title="= Fx1-2"></td>
+                                <td>Hệ số hiệu suất</td>
                                 <td>%</td>
-                                <td>
-                                    <input id="hesodienday" value="{{ data.hesodienday1 }}" readonly style="width:100px; text-align:center; display: block; margin: 0 auto;">
-                                </td>
+                                <td><input id="fx6-14" type="text" style="width: 100px; text-align: center;" title="Mặc định là 88, nếu click vào chỉnh sửa thì có thể nhập thủ công từ 0 đến 100"></td>
                             </tr>
                             <tr>
-                                <td>Góc nghiêng</td>
+                                <td style="color: #007bff;">Chiều dài</td>
+                                <td>mm</td>
+                                <td><input id="fx6-7" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Công suất tải trọng</td>
+                                <td>Kw</td>
+                                <td><input id="fx6-15" type="text" style="width: 100px; text-align: center;" title="=(Fx6-7*0.00328084*Fx6-18*Fx6-19*0.372*Fx6-20^2.03)*0.75"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #007bff;">Góc nghiêng</td>
                                 <td>Độ</td>
-                                <td>
-                                    <input id="fx2-5" type="text" min="0" max="100" style="width: 100px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td><input id="fx6-8" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Công suất tải vật liệu</td>
+                                <td>Kw</td>
+                                <td><input id="fx6-21" type="text" style="width: 100px; text-align: center;" title="=(Fx6-7*0.00328084*Fx6-2*Fx6-6*Fx6-10*Fx6-11)*0.75"></td>
                             </tr>
                             <tr>
-                                <td>Hệ số điền đầy góc nghiêng</td>
-                                <td>%</td>
-                                <td>
-                                    <input id="fx2-6" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Đường kính cánh</td>
+                                <td style="color: #007bff;">Chiều cao xả</td>
                                 <td>mm</td>
-                                <td>
-                                    <input id="fx2-7" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td><input id="fx6-9" type="text" style="width: 100px; text-align: center;" title="Khi chọn vào mục này thì mục Fx6-8 sẽ bị vô hiệu hóa"></td>
+                                <td>Tổng công suất</td>
+                                <td>Kw</td>
+                                <td><input id="fx6-22" type="text" style="width: 100px; text-align: center;" title="=((Fx6-21+Fx6-19)+Fx6-15)*Fx6-12/Fx6-14"></td>
                             </tr>
                             <tr>
-                                <td>Bước cánh</td>
+                                <td style="color: #007bff;">Tốc độ</td>
+                                <td>Rpm</td>
+                                <td><input id="fx6-18" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 04"></td>
+                                <td>Momen xoắn</td>
+                                <td>Nm</td>
+                                <td><input id="fx6-16" type="text" style="width: 100px; text-align: center;" title="=9550*Fx6-22/101"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: #007bff;">Đường kính cánh</td>
                                 <td>mm</td>
-                                <td>
-                                    <input id="fx2-8" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Đường kính trục</td>
-                                <td>mm</td>
-                                <td>
-                                    <input id="fx2-9" type="text" style="width: 150px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Tốc độ</td>
-                                <td>rpm</td>
-                                <td>
-                                    <input id="fx2-10" readonly style="width: 150px; text-align: center; display: block; margin: 0 auto;">
-                                </td>
+                                <td><input id="fx6-20" type="text" style="width: 100px; text-align: center;" title="Lấy giá trị từ Tab 02 hoặc 03 hoặc 05"></td>
+                                <td>Lực dọc trục</td>
+                                <td>N</td>
+                                <td><input id="fx6-17" type="text" style="width: 100px; text-align: center;"></td>
                             </tr>
                         </tbody>
-                        
-                        
                     </table>
                     <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                         <button class="search-button" onclick="window.history.back()">⬅️ Back</button>
-                        <form method="POST" action="/trough/tab3" id="nextForm">
-                            <input type="hidden" name="input_fx2-1" id="input_fx2-1">
-                            <input type="hidden" name="input_fx2-2" id="input_fx2-2">
-                            <input type="hidden" name="input_fx2-3" id="input_fx2-3">
-                            <input type="hidden" name="input_fx2-4" id="input_fx2-4">
-                            <input type="hidden" name="input_hesodienday" id="input_hesodienday">
-                            <input type="hidden" name="input_fx2-5" id="input_fx2-5">
-                            <input type="hidden" name="input_fx2-6" id="input_fx2-6">
-                            <input type="hidden" name="input_fx2-7" id="input_fx2-7">
-                            <input type="hidden" name="input_fx2-8" id="input_fx2-8">
-                            <input type="hidden" name="input_fx2-9" id="input_fx2-9">
-                            <input type="hidden" name="input_fx2-10" id="input_fx2-10">
+                        <form method="POST" action="/trough/tab7" id="nextForm">
+                            <input type="hidden" name="input_fx6-1" id="input_fx6-1">
+                            <input type="hidden" name="input_fx6-2" id="input_fx6-2">
+                            <input type="hidden" name="input_fx6-3" id="input_fx6-3">
+                            <input type="hidden" name="input_fx6-4" id="input_fx6-4">
+                            <input type="hidden" name="input_fx6-5" id="input_fx6-5">
+                            <input type="hidden" name="input_fx6-6" id="input_fx6-6">
+                            <input type="hidden" name="input_fx6-7" id="input_fx6-7">
+                            <input type="hidden" name="input_fx6-8" id="input_fx6-8">
+                            <input type="hidden" name="input_fx6-9" id="input_fx6-9">
+                            <input type="hidden" name="input_fx6-10" id="input_fx6-10">
+                            <input type="hidden" name="input_fx6-11" id="input_fx6-11">
+                            <input type="hidden" name="input_fx6-12" id="input_fx6-12">
+                            <input type="hidden" name="input_fx6-13" id="input_fx6-13">
+                            <input type="hidden" name="input_fx6-14" id="input_fx6-14">
+                            <input type="hidden" name="input_fx6-15" id="input_fx6-15">
+                            <input type="hidden" name="input_fx6-16" id="input_fx6-16">
+                            <input type="hidden" name="input_fx6-17" id="input_fx6-17">
+                            <input type="hidden" name="input_fx6-18" id="input_fx6-18">
+                            <input type="hidden" name="input_fx6-19" id="input_fx6-19">
+                            <input type="hidden" name="input_fx6-20" id="input_fx6-20">
+                            <input type="hidden" name="input_fx6-21" id="input_fx6-21">
+                            <input type="hidden" name="input_fx6-22" id="input_fx6-22">
             
                             <button class="search-button">Next ➡️</button>
                         </form>
@@ -222,132 +271,216 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>
         window.addEventListener("DOMContentLoaded", () => {
-            const fx1_1 = parseFloat({{ data.tytrong1 | tojson }}) || 1;
-        
-            const inputFx21 = document.getElementById('fx2-1');
-            const inputFx22 = document.getElementById('fx2-2');
-            const inputFx23 = document.getElementById('fx2-3');
-            const inputFx24 = document.getElementById('fx2-4');
-            const inputFx25 = document.getElementById('fx2-5');
-            const inputFx26 = document.getElementById('fx2-6');
-            const inputFx27 = document.getElementById('fx2-7');
-            const inputFx28 = document.getElementById('fx2-8');
-            const inputFx29 = document.getElementById('fx2-9');
-            const inputFx210 = document.getElementById('fx2-10');
-            const inputHeso = document.getElementById('hesodienday');
-        
-            inputFx21.addEventListener('input', () => {
-                const val = parseFloat(inputFx21.value);
-                if (!isNaN(val)) {
-                    inputFx22.value = (val * 35.3147).toFixed(4);
-                    inputFx23.value = (val * fx1_1).toFixed(4);
-                    inputFx24.value = (val * fx1_1 * 2.20462).toFixed(4);
-                } else {
-                    inputFx22.value = inputFx23.value = inputFx24.value = '';
-                }
-            });
-        
-            inputFx22.addEventListener('input', () => {
-                const val = parseFloat(inputFx22.value);
-                if (!isNaN(val)) {
-                    inputFx21.value = (val / 35.3147).toFixed(4);
-                    inputFx23.value = (inputFx21.value * fx1_1).toFixed(4);
-                    inputFx24.value = (val * 2.20462).toFixed(4);
-                } else {
-                    inputFx21.value = inputFx23.value = inputFx24.value = '';
-                }
-            });
-        
-            inputFx23.addEventListener('input', () => {
-                const val = parseFloat(inputFx23.value);
-                if (!isNaN(val)) {
-                    inputFx21.value = (val / fx1_1).toFixed(4);
-                    inputFx22.value = (inputFx21.value * 35.3147).toFixed(4);
-                    inputFx24.value = (val * 2.20462).toFixed(4);
-                } else {
-                    inputFx21.value = inputFx22.value = inputFx24.value = '';
-                }
-            });
-        
-            inputFx24.addEventListener('input', () => {
-                const val = parseFloat(inputFx24.value);
-                if (!isNaN(val)) {
-                    inputFx23.value = (val / 2.20462).toFixed(4);
-                    inputFx21.value = (inputFx23.value / fx1_1).toFixed(4);
-                    inputFx22.value = (inputFx21.value * 35.3147).toFixed(4);
-                } else {
-                    inputFx21.value = inputFx22.value = inputFx23.value = '';
-                }
-            });
-        
-            inputFx25.addEventListener('input', () => {
-                const val = parseFloat(inputFx25.value);
-                if (!isNaN(val)) {
-                    inputFx26.value = (4.43e-5 * Math.pow(val, 2) - 0.00836 * val + 1.0058).toFixed(4);
-                } else {
-                    inputFx26.value = '';
-                }
-            });
-        
-            inputFx26.addEventListener('input', () => {
-                const val = parseFloat(inputFx26.value);
-                if (!isNaN(val)) {
-                    inputFx25.value = Math.sqrt((val - 1.0058 + 0.00836 * val) / 4.43e-5).toFixed(4);
-                } else {
-                    inputFx25.value = '';
-                }
-            });
-        
-            const calculateFx210 = () => {
-                const D = parseFloat(inputFx27.value);
-                const P = parseFloat(inputFx28.value);
-                const d = parseFloat(inputFx29.value);
+            const fx1_1 = parseFloat({{ data.tytrong | tojson }}) || 1;
+            const fx1_2 = parseFloat({{ data.hesovatlieu | tojson }}) || 1;
             
-                if (isNaN(D) || isNaN(P) || isNaN(d)) {
-                    inputFx210.value = '';
-                    return;
+            // Setup initial values and calculations
+            const setupCalculations = () => {
+                // Fx6-5 = Fx1-1 (Tỷ trọng từ tab1)
+                document.getElementById('fx6-5').value = fx1_1;
+                // Fx6-6 = Fx1-2 (Hệ số vật liệu từ tab1)
+                document.getElementById('fx6-6').value = (fx1_1 * 0.06243).toFixed(2);
+                
+                // Fx6-10 = C (import từ Tab 1)
+                document.getElementById('fx6-10').value = {{ data.hesodienday | tojson }} || '';
+                
+                // Fx6-11 = Fm
+                document.getElementById('fx6-11').value = fx1_2 || '';
+                
+                // Mặc định hiệu suất là 88%
+                document.getElementById('fx6-14').value = '88';
+                
+                // Calculate other values if available
+                calculateDerivedValues();
+            };
+            
+            const calculateDerivedValues = () => {
+                const fx6_1 = parseFloat(document.getElementById('fx6-1').value) || 0;
+                const fx6_2 = parseFloat(document.getElementById('fx6-2').value) || 0;
+                const fx6_3 = parseFloat(document.getElementById('fx6-3').value) || 0;
+                const fx6_5 = parseFloat(document.getElementById('fx6-5').value) || 0;
+                const fx6_7 = parseFloat(document.getElementById('fx6-7').value) || 0;
+                const fx6_8 = parseFloat(document.getElementById('fx6-8').value) || 0;
+                const fx6_10 = parseFloat(document.getElementById('fx6-10').value) || 0;
+                const fx6_11 = parseFloat(document.getElementById('fx6-11').value) || 0;
+                const fx6_14 = parseFloat(document.getElementById('fx6-14').value) || 88;
+                const fx6_15 = parseFloat(document.getElementById('fx6-15').value) || 0;
+                const fx6_18 = parseFloat(document.getElementById('fx6-18').value) || 0;
+                const fx6_19 = document.getElementById('fx6-19').value || '';
+                const fx6_20 = parseFloat(document.getElementById('fx6-20').value) || 0;
+                
+                // Fx6-12 = 0.8*(Fx6-15+Fx6-21)*0.12
+                if (fx6_15 > 0) {
+                    const fx6_21 = parseFloat(document.getElementById('fx6-21').value) || 0;
+                    document.getElementById('fx6-12').value = (0.8 * (fx6_15 + fx6_21) * 0.12).toFixed(2);
                 }
-            
-                const C = parseFloat(inputHeso.value) || 1;
-                const f = parseFloat(inputFx26.value) || 1;
-                const Q = parseFloat(inputFx21.value) || 0;
-            
-                if (D > 0 && P > 0 && C > 0 && f > 0 && Q > 0) {
-                    const rpm = Q / (Math.PI * (Math.pow(D, 2) - Math.pow(d, 2)) * P * C / 100 * f / 1e9);
-                    inputFx210.value = rpm.toFixed(4);
-                } else {
-                    inputFx210.value = '';
+                
+                // Fx6-13 = 4.43*10^-5*Fx6-8^2-0.00836*Fx6-8+1.0058
+                if (fx6_8 > 0) {
+                    const result = 4.43e-5 * Math.pow(fx6_8, 2) - 0.00836 * fx6_8 + 1.0058;
+                    document.getElementById('fx6-13').value = result.toFixed(4);
+                }
+                
+                // Fx6-15 = (Fx6-7*0.00328084*Fx6-18*Fx6-19*0.372*Fx6-20^2.03)*0.75
+                if (fx6_7 > 0 && fx6_18 > 0 && fx6_20 > 0) {
+                    const power = (fx6_7 * 0.00328084 * fx6_18 * fx6_11 * 0.372 * Math.pow(fx6_20, 2.03)) * 0.75;
+                    document.getElementById('fx6-15').value = power.toFixed(2);
+                }
+                
+                // Fx6-16 = 9550*Fx6-22/101
+                const fx6_22 = parseFloat(document.getElementById('fx6-22').value) || 0;
+                if (fx6_22 > 0) {
+                    document.getElementById('fx6-16').value = (9550 * fx6_22 / 101).toFixed(2);
+                }
+                
+                // Fx6-21 = (Fx6-7*0.00328084*Fx6-2*Fx6-6*Fx6-10*Fx6-11)*0.75
+                if (fx6_7 > 0 && fx6_2 > 0 && fx6_10 > 0 && fx6_11 > 0) {
+                    const materialPower = (fx6_7 * 0.00328084 * fx6_2 * fx6_6 * fx6_10 * fx6_11) * 0.75;
+                    document.getElementById('fx6-21').value = materialPower.toFixed(2);
+                    
+                    // Re-calculate Fx6-12 after Fx6-21 is updated
+                    const fx6_15 = parseFloat(document.getElementById('fx6-15').value) || 0;
+                    document.getElementById('fx6-12').value = (0.8 * (fx6_15 + materialPower) * 0.12).toFixed(2);
+                }
+                
+                // Fx6-22 = ((Fx6-21+Fx6-19)+Fx6-15)*Fx6-12/Fx6-14
+                const fx6_21 = parseFloat(document.getElementById('fx6-21').value) || 0;
+                if (fx6_21 > 0 && fx6_15 > 0 && fx6_14 > 0) {
+                    const fx6_12 = parseFloat(document.getElementById('fx6-12').value) || 0;
+                    const totalPower = ((fx6_21 + (parseFloat(fx6_19) || 0) + fx6_15) * fx6_12) / fx6_14;
+                    document.getElementById('fx6-22').value = totalPower.toFixed(2);
+                    
+                    // Update moment after total power calculation
+                    document.getElementById('fx6-16').value = (9550 * totalPower / 101).toFixed(2);
                 }
             };
             
-        
-            inputFx27.addEventListener('input', calculateFx210);
-            inputFx28.addEventListener('input', calculateFx210);
-            inputFx29.addEventListener('input', calculateFx210);
-        });
-        </script>
-        
-        <script>
-            const tbody = document.querySelector('tbody');
-            const fieldIds = [
-                'fx2-1', 'fx2-2', 'fx2-3', 'fx2-4', 'fx2-5',
-                'fx2-6', 'fx2-7', 'fx2-8', 'fx2-9', 'fx2-10', 'hesodienday'
-            ];
-            tbody.addEventListener('input', function () {
-                fieldIds.forEach(id => {
-                    const visible = document.getElementById(id);
-                    const hidden = document.getElementById('input_' + id);
-        
-                    if (visible && hidden) {
-                        hidden.value = visible.value;
+            // Setup conversion between units
+            const inputFx61 = document.getElementById('fx6-1'); // m3/h
+            const inputFx62 = document.getElementById('fx6-2'); // ft3/h
+            const inputFx63 = document.getElementById('fx6-3'); // kg/h
+            const inputFx64 = document.getElementById('fx6-4'); // lbs/h
+            const inputFx65 = document.getElementById('fx6-5'); // kg/m3
+            const inputFx66 = document.getElementById('fx6-6'); // lbs/ft3
+            
+            // Add event listeners for input fields
+            const setupEventListeners = () => {
+                if (inputFx61) {
+                    inputFx61.addEventListener('input', () => {
+                        const val = parseFloat(inputFx61.value);
+                        if (!isNaN(val)) {
+                            inputFx62.value = (val * 35.3147).toFixed(2);
+                            if (inputFx65.value) {
+                                const density = parseFloat(inputFx65.value);
+                                if (!isNaN(density)) {
+                                    inputFx63.value = (val * density).toFixed(2);
+                                    inputFx64.value = (parseFloat(inputFx63.value) * 2.20462).toFixed(2);
+                                }
+                            }
+                            calculateDerivedValues();
+                        }
+                    });
+                }
+                
+                if (inputFx62) {
+                    inputFx62.addEventListener('input', () => {
+                        const val = parseFloat(inputFx62.value);
+                        if (!isNaN(val)) {
+                            inputFx61.value = (val / 35.3147).toFixed(2);
+                            if (inputFx65.value) {
+                                const density = parseFloat(inputFx65.value);
+                                if (!isNaN(density)) {
+                                    inputFx63.value = (parseFloat(inputFx61.value) * density).toFixed(2);
+                                    inputFx64.value = (parseFloat(inputFx63.value) * 2.20462).toFixed(2);
+                                }
+                            }
+                            calculateDerivedValues();
+                        }
+                    });
+                }
+                
+                if (inputFx65) {
+                    inputFx65.addEventListener('input', () => {
+                        const val = parseFloat(inputFx65.value);
+                        if (!isNaN(val)) {
+                            inputFx66.value = (val * 0.06243).toFixed(2);
+                            if (inputFx61.value) {
+                                const volume = parseFloat(inputFx61.value);
+                                if (!isNaN(volume)) {
+                                    inputFx63.value = (volume * val).toFixed(2);
+                                    inputFx64.value = (parseFloat(inputFx63.value) * 2.20462).toFixed(2);
+                                }
+                            }
+                            calculateDerivedValues();
+                        }
+                    });
+                }
+                
+                if (inputFx66) {
+                    inputFx66.addEventListener('input', () => {
+                        const val = parseFloat(inputFx66.value);
+                        if (!isNaN(val)) {
+                            inputFx65.value = (val / 0.06243).toFixed(2);
+                            if (inputFx61.value) {
+                                const volume = parseFloat(inputFx61.value);
+                                if (!isNaN(volume)) {
+                                    inputFx63.value = (volume * parseFloat(inputFx65.value)).toFixed(2);
+                                    inputFx64.value = (parseFloat(inputFx63.value) * 2.20462).toFixed(2);
+                                }
+                            }
+                            calculateDerivedValues();
+                        }
+                    });
+                }
+                
+                // Add event listeners to other fields for calculations
+                ['fx6-7', 'fx6-8', 'fx6-9', 'fx6-10', 'fx6-11', 'fx6-14', 'fx6-18', 'fx6-19', 'fx6-20'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('input', calculateDerivedValues);
                     }
                 });
-            });
-        </script>
+                
+                // Special behavior for Fx6-9 (when selected, Fx6-8 becomes hidden)
+                const fx6_9 = document.getElementById('fx6-9');
+                if (fx6_9) {
+                    fx6_9.addEventListener('focus', () => {
+                        const note = document.createElement('div');
+                        note.textContent = 'Khi chọn vào mục này thì mục Fx6-8 sẽ bị vô hiệu hóa';
+                        note.style.color = 'red';
+                        note.style.fontSize = '12px';
+                        note.id = 'fx6-9-note';
+                        
+                        if (!document.getElementById('fx6-9-note')) {
+                            fx6_9.parentNode.appendChild(note);
+                        }
+                    });
+                }
+            };
+            
+            // Initialize calculations and event listeners
+            setupCalculations();
+            setupEventListeners();
+        });
+    </script>
         
+    <script>
+        const tbody = document.querySelector('tbody');
+        const fieldIds = [
+            'fx6-1', 'fx6-2', 'fx6-3', 'fx6-4', 'fx6-5', 'fx6-6', 'fx6-7', 'fx6-8', 'fx6-9', 'fx6-10', 'fx6-11',
+            'fx6-12', 'fx6-13', 'fx6-14', 'fx6-15', 'fx6-16', 'fx6-17', 'fx6-18', 'fx6-19', 'fx6-20', 'fx6-21', 'fx6-22'
+        ];
         
-        
+        tbody.addEventListener('input', function () {
+            fieldIds.forEach(id => {
+                const visible = document.getElementById(id);
+                const hidden = document.getElementById('input_' + id);
     
+                if (visible && hidden) {
+                    hidden.value = visible.value;
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>

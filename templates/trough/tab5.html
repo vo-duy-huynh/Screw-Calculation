@@ -223,18 +223,17 @@
                     </table>
                     <div style="display: flex; justify-content: space-between; margin-top: 20px;">
                         <button class="search-button" onclick="window.history.back()">⬅️ Back</button>
-                        <form method="POST" action="/trough/tab3" id="nextForm">
-                            <input type="hidden" name="nangsuatm3h" id="input_nangsuatm3h">
-                            <input type="hidden" name="nangsuatft3h" id="input_nangsuatft3h">
-                            <input type="hidden" name="khoiluongkgh" id="input_khoiluongkgh">
-                            <input type="hidden" name="khoiluonglbsh" id="input_khoiluonglbsh">
-                            <input type="hidden" name="hesovattulieu" id="input_hesovattulieu">
-                            <input type="hidden" name="gocnghieng" id="input_gocnghieng">
-                            <input type="hidden" name="hesodienfull" id="input_hesodienfull">
+                        <form method="POST" action="/trough/tab6" id="nextForm">
+                            <input type="hidden" name="modundanhoi" id="input_modundanhoi">
+                            <input type="hidden" name="tytrongdm3" id="input_tytrongdm3">
+                            <input type="hidden" name="chieudai" id="input_chieudai">
                             <input type="hidden" name="duongkinhcanh" id="input_duongkinhcanh">
                             <input type="hidden" name="buoccanh" id="input_buoccanh">
+                            <input type="hidden" name="chieudaycanh" id="input_chieudaycanh">
                             <input type="hidden" name="duongkinhtruc" id="input_duongkinhtruc">
-                            <input type="hidden" name="tocdo" id="input_tocdo">
+                            <input type="hidden" name="chieudaytruc" id="input_chieudaytruc">
+                            <input type="hidden" name="momenquantinh" id="input_momenquantinh">
+                            <input type="hidden" name="dovongtruc" id="input_buoccanh">
             
                             <button class="search-button">Next ➡️</button>
                         </form>
@@ -270,79 +269,78 @@
         });
     </script>
     <script>
-        window.addEventListener("DOMContentLoaded", () => {
+        function calculateValues() {
             function getVal(id) {
                 return parseFloat(document.getElementById(id).value) || 0;
             }
+
+            const fx5_1 = getVal("fx5-1");
+            const fx5_2 = getVal("fx5-2");
+            const fx5_3 = getVal("fx5-3");
+            const fx5_4 = getVal("fx5-4");
+            const fx5_5 = getVal("fx5-5");
+            const fx5_6 = getVal("fx5-6");
+            const fx5_7 = getVal("fx5-7");
+            const fx5_8 = getVal("fx5-8");
+
+            const pi = Math.PI;
+
+            const l = Math.sqrt(Math.pow(fx5_7 * pi, 2) + Math.pow(fx5_5, 2));
+            const L = Math.sqrt(Math.pow(fx5_4 * pi, 2) + Math.pow(fx5_5, 2));
+            const ratio = L / l;
+            const d_ = (fx5_4 - fx5_7) / (ratio - 1);
+            const D_ = (ratio - 1) * (fx5_4 - fx5_7) + d_;
+            const alpha = L / (fx5_4 * pi / 360);
+
+            const CV = pi * ((Math.pow(D_ / 2000, 2) - Math.pow(d_ / 2000, 2)) * fx5_6 * fx5_2 * (360 - alpha) / 360);
+            const TV = (fx5_7 - fx5_8) * pi * fx5_3 * fx5_8 * fx5_2 / 1000000;
+            const KL = CV * (fx5_3 / fx5_5) + TV;
+
+            const fx5_9 = (pi / 64) * (Math.pow(fx5_7, 4) - Math.pow(fx5_7 - fx5_8 * 2, 4));
+            const fx5_10 = (6.387e-7 * KL * Math.pow(fx5_3, 3)) / fx5_9;
+
+            document.getElementById("fx5-9").value = fx5_9.toFixed(4);
+            document.getElementById("fx5-10").value = fx5_10.toFixed(4);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const inputs = document.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateValues);
+            });
+
+            const selectElement = document.getElementById('mpaSelect');
+            selectElement.addEventListener('change', calculateValues);
+            calculateValues();
+        });
+    </script>
+    <script>
+        const tbody = document.querySelector('tbody');
+        const fieldMap = {
+            'fx5-1': 'input_modundanhoi',
+            'fx5-2': 'input_tytrongdm3',
+            'fx5-3': 'input_chieudai',
+            'fx5-4': 'input_duongkinhcanh',
+            'fx5-5': 'input_buoccanh',
+            'fx5-6': 'input_chieudaycanh',
+            'fx5-7': 'input_duongkinhtruc',
+            'fx5-8': 'input_chieudaytruc',
+            'fx5-9': 'input_momenquantinh',
+            'fx5-10': 'input_dovongtruc'
+        };
     
-            function setText(id, val) {
-                document.getElementById(id).textContent = val.toFixed(4);
-            }
+        tbody.addEventListener('input', () => {
+            Object.entries(fieldMap).forEach(([visibleId, hiddenId]) => {
+                const visible = document.getElementById(visibleId);
+                const hidden = document.getElementById(hiddenId);
     
-            document.getElementById("calcBtn").addEventListener("click", () => {
-                const fx5_1 = getVal("fx5-1");
-                const fx5_2 = getVal("fx5-2");
-                const fx5_3 = getVal("fx5-3");
-                const fx5_4 = getVal("fx5-4");
-                const fx5_5 = getVal("fx5-5");
-                const fx5_6 = getVal("fx5-6");
-                const fx5_7 = getVal("fx5-7");
-                const fx5_8 = getVal("fx5-8");
-    
-                const pi = Math.PI;
-    
-                const l = Math.sqrt(Math.pow(fx5_7 * pi, 2) + Math.pow(fx5_5, 2));
-                const L = Math.sqrt(Math.pow(fx5_4 * pi, 2) + Math.pow(fx5_5, 2));
-                const ratio = L / l;
-                const d_ = (fx5_4 - fx5_7) / (ratio - 1);
-                const D_ = (ratio - 1) * (fx5_4 - fx5_7) + d_;
-                const alpha = L / (fx5_4 * pi / 360);
-    
-                const CV = pi * ((Math.pow(D_ / 2000, 2) - Math.pow(d_ / 2000, 2)) * fx5_6 * fx5_2 * (360 - alpha) / 360);
-                const TV = (fx5_7 - fx5_8) * pi * fx5_3 * fx5_8 * fx5_2 / 1000000;
-                const KL = CV * (fx5_3 / fx5_5) + TV;
-    
-                const fx5_9 = (pi / 64) * (Math.pow(fx5_7, 4) - Math.pow(fx5_7 - fx5_8 * 2, 4));
-                const fx5_10 = (6.387e-7 * KL * Math.pow(fx5_3, 3)) / fx5_9;
-    
-                document.getElementById("fx5-9").value = fx5_9;
-                document.getElementById("fx5-10").value = fx5_10; 
+                if (visible && hidden) {
+                    const value = visible.tagName === 'INPUT' ? visible.value : visible.textContent;
+                    hidden.value = value;
+                }
             });
         });
     </script>
-    
-    
-        
-        
-        
-        <script>
-            const tbody = document.querySelector('tbody');
-            const fieldMap = {
-                'fx5-1': 'input_nangsuatm3h',
-                'fx5-2': 'input_nangsuatft3h',
-                'fx5-3': 'input_khoiluongkgh',
-                'fx5-4': 'input_khoiluonglbsh',
-                'hesodienday': 'input_hesovattulieu',
-                'fx5-5': 'input_gocnghieng',
-                'fx5-6': 'input_hesodienfull',
-                'fx5-7': 'input_duongkinhcanh',
-                'fx5-8': 'input_buoccanh',
-                'fx5-9': 'input_duongkinhtruc',
-                'fx5-10': 'input_tocdo'
-            };
-        
-            tbody.addEventListener('input', () => {
-                Object.entries(fieldMap).forEach(([visibleId, hiddenId]) => {
-                    const visible = document.getElementById(visibleId);
-                    const hidden = document.getElementById(hiddenId);
-        
-                    if (visible && hidden) {
-                        const value = visible.tagName === 'INPUT' ? visible.value : visible.textContent;
-                        hidden.value = value;
-                    }
-                });
-            });
-        </script>
 </body>
 
 </html>

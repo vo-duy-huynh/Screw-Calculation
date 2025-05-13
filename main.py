@@ -127,6 +127,28 @@ def show_tab5():
         'hesodienday': session.get('hesodienday'),
         'tenvatlieu': session.get('tenvatlieu')
     }, mpas=mpas, materials=materials) 
+@app.route('/trough/tab6', methods=['POST'])
+def tab6():
+    fields = [
+    'modundanhoi', 'tytrongdm3', 'chieudai', 'duongkinhcanh', 'buoccanh', 'chieudaycanh', 'duongkinhtruc', 'chieudaytruc', 'momenquantinh', 'dovongtruc'
+    ]
+    
+    for field in fields:
+        value = request.form.get(field)
+        if value:
+            session[field] = value
+    return redirect(url_for('show_tab6'))
+
+@app.route('/trough/tab6')
+def show_tab6():
+    if not session.get('tytrong'):
+        flash("⚠️ Vui lòng nhập dữ liệu vật liệu trước khi tiếp tục.")
+        return redirect(url_for('tab1'))
+    return render_template('./trough/tab6.html', data={
+        'tytrong': session.get('tytrong'),
+        'hesodienday': session.get('hesodienday'),
+        'tenvatlieu': session.get('tenvatlieu')
+    })
     
  
 if __name__ == '__main__':
